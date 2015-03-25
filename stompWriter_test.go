@@ -46,8 +46,8 @@ func TestStompWriter(t *testing.T) {
 		g.BeforeEach(func() {
 			server, _ = testServer("200 OK")
 			mockStomp = makeMockStomp()
-			getStompConnection = func(netCon net.Conn, connectionHeaders stompngo.Headers) stompConnectioner {
-				return mockStomp
+			getStompConnection = func(netCon net.Conn, connectionHeaders stompngo.Headers) (stompConnectioner, error) {
+				return mockStomp, nil
 			}
 		})
 		g.It("should be initialized correctly", func() {
