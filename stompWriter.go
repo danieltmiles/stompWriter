@@ -89,7 +89,7 @@ func (s *StompWriter) Connect() error {
 
 func (s *StompWriter) Disconnect() {
 	// disconnect IO
-	if s.netCon != nil && s.Connection.Connected() {
+	if s.netCon != nil && s.Connection != nil && s.Connection.Connected() {
 		s.Connection.Disconnect(stompngo.Headers{})
 	}
 	if s.netCon != nil {
@@ -104,13 +104,15 @@ func (s *StompWriter) Write(payload []byte) (int, error) {
 		"destination", "/queue/" + s.queueName,
 		"content-type", "text/plain;charset=UTF-8",
 	}
+	var err error
 	s.mu.Lock()
-	err := s.Connection.Send(h, string(payload))
+	if s.netCon != nil && s.Connection != nil && s.Connection.Connected() {
+		err = s.Connection.Send(h, string(payload))
+	}
 	s.mu.Unlock()
 	if err != nil {
 		return 0, err
 	}
-
 	return len(payload), nil
 }
 
