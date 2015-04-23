@@ -89,7 +89,7 @@ func (s *StompWriter) Connect() error {
 
 func (s *StompWriter) Disconnect() {
 	// disconnect IO
-	if s.netCon != nil && s.Connection.Connected() {
+	if s.netCon != nil && s.Connection != nil && s.Connection.Connected() {
 		s.Connection.Disconnect(stompngo.Headers{})
 	}
 	if s.netCon != nil {
