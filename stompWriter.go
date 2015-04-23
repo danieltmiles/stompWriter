@@ -104,13 +104,15 @@ func (s *StompWriter) Write(payload []byte) (int, error) {
 		"destination", "/queue/" + s.queueName,
 		"content-type", "text/plain;charset=UTF-8",
 	}
+	var err error
 	s.mu.Lock()
-	err := s.Connection.Send(h, string(payload))
+	if s.netCon != nil && s.Connection != nil && s.Connection.Connected() {
+		err = s.Connection.Send(h, string(payload))
+	}
 	s.mu.Unlock()
 	if err != nil {
 		return 0, err
 	}
-
 	return len(payload), nil
 }
 
