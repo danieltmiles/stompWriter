@@ -13,7 +13,7 @@
 		},
 		{
 			"ImportPath": "github.com/monsooncommerce/mockstomp",
-			"Rev": "62d31abb1b1c8561a4ee09014524eef8fd84437a"
+			"Rev": "e28304ba8139b42775ca4098a12d18c8d5ba392f"
 		},
 		{
 			"ImportPath": "github.com/onsi/gomega",
