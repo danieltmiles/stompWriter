@@ -1,0 +1,10 @@
+# Eclipse project file
+.project
+
+# Folders
+_obj
+_test
+.idea/
+
+#
+setenv.sh
