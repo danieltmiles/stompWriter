@@ -9,7 +9,7 @@
 		},
 		{
 			"ImportPath": "github.com/gmallard/stompngo",
-			"Rev": "f6f1061abae9a425232f2cd9cd7d0d38adc4bfcc"
+			"Rev": "61329eb04c725efe9d1622e52345785b12074282"
 		},
 		{
 			"ImportPath": "github.com/onsi/gomega",

@@ -9,11 +9,11 @@
 		},
 		{
 			"ImportPath": "github.com/gmallard/stompngo",
-			"Rev": "f6f1061abae9a425232f2cd9cd7d0d38adc4bfcc"
+			"Rev": "61329eb04c725efe9d1622e52345785b12074282"
 		},
 		{
 			"ImportPath": "github.com/monsooncommerce/mockstomp",
-			"Rev": "e28304ba8139b42775ca4098a12d18c8d5ba392f"
+			"Rev": "2c5d81d4b41524a68a71548ea109ed8c0a9979dd"
 		},
 		{
 			"ImportPath": "github.com/onsi/gomega",
