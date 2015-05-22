@@ -73,6 +73,17 @@ func TestStompWriter(t *testing.T) {
 
 			Expect(stompWriter.Connection).To(Equal(mockStomp))
 		})
+		g.It("should fail when configured improperly", func() {
+			hostname := ""
+			port := ""
+			username := "username"
+			password := "password"
+			queueName := "queueName"
+
+			stompWriter, err := Configure(hostname, port, username, password, queueName, "myAppName")
+			Expect(stompWriter).To(Equal((*StompWriter)(nil)))
+			Expect(err.Error()).To(Equal("dial tcp: unknown port tcp/"))
+		})
 		g.It("should send request properly", func() {
 			hostname, port, _ := net.SplitHostPort(server.URL[7:])
 			username := "username"

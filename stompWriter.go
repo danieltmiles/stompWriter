@@ -1,8 +1,8 @@
 package stompWriter
 
 import (
+	"fmt"
 	"net"
-	"os"
 	"strings"
 	"sync"
 	"time"
@@ -89,14 +89,13 @@ func Configure(hostname, port, username, password, queueName, app string) (*Stom
 		fmt.Printf("%s_LOGQUEUEPASS not set.\n", appName)
 		ok = false
 	}
-	if spec.queueName == "" {
+	if queueName == "" {
 		fmt.Printf("%s_LOGQUEUENAME not set.\n", appName)
 		ok = false
 	}
 
 	if !ok {
 		fmt.Println("Logger configurations not properly set")
-		os.Exit(1)
 	}
 	return New(hostname, port, username, password, queueName)
 }
