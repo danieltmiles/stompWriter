@@ -2,6 +2,8 @@ package stompWriter
 
 import (
 	"net"
+	"os"
+	"strings"
 	"sync"
 	"time"
 
@@ -65,6 +67,38 @@ func New(hostname, port, username, password, queueName string) (*StompWriter, er
 	}(&newStompWriter)
 
 	return &newStompWriter, nil
+}
+
+func Configure(hostname, port, username, password, queueName, app string) (*StompWriter, error) {
+	ok := true
+	appName := strings.ToUpper(app)
+	// collect logging queue parameters
+	if hostname == "" {
+		fmt.Printf("%s_LOGQUEUEHOST not set.\n", appName)
+		ok = false
+	}
+	if port == "" {
+		fmt.Printf("%s_LOGQUEUEPORT not set.\n", appName)
+		ok = false
+	}
+	if username == "" {
+		fmt.Printf("%s_LOGQUEUEUSER not set.\n", appName)
+		ok = false
+	}
+	if password == "" {
+		fmt.Printf("%s_LOGQUEUEPASS not set.\n", appName)
+		ok = false
+	}
+	if spec.queueName == "" {
+		fmt.Printf("%s_LOGQUEUENAME not set.\n", appName)
+		ok = false
+	}
+
+	if !ok {
+		fmt.Println("Logger configurations not properly set")
+		os.Exit(1)
+	}
+	return New(hostname, port, username, password, queueName)
 }
 
 func (s *StompWriter) Connect() error {
