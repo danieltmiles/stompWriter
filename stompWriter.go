@@ -1,6 +1,7 @@
 package stompWriter
 
 import (
+	"errors"
 	"fmt"
 	"net"
 	"strings"
@@ -95,7 +96,9 @@ func Configure(hostname, port, username, password, queueName, app string) (*Stom
 	}
 
 	if !ok {
-		fmt.Println("Logger configurations not properly set")
+		err := errors.New("Logger configuration not properly set")
+		fmt.Println(err.Error())
+		return nil, err
 	}
 	return New(hostname, port, username, password, queueName)
 }
