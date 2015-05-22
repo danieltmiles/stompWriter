@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"net"
-	"strings"
 	"sync"
 	"time"
 
@@ -34,6 +33,33 @@ type StompWriter struct {
 }
 
 func New(hostname, port, username, password, queueName string) (*StompWriter, error) {
+	// collect, validate logging queue parameters
+	ok := true
+	if hostname == "" {
+		fmt.Println("StompWriter: host name not set.")
+		ok = false
+	}
+	if port == "" {
+		fmt.Println("StompWrtier: port not set.")
+		ok = false
+	}
+	if username == "" {
+		fmt.Println("StompWriter: username not set.")
+		ok = false
+	}
+	if password == "" {
+		fmt.Println("StompWriter: password not set.")
+		ok = false
+	}
+	if queueName == "" {
+		fmt.Println("StompWriter: queue name not set.")
+		ok = false
+	}
+	if !ok {
+		err := errors.New("StompWriter: configuration not properly set")
+		return nil, err
+	}
+
 	newStompWriter := StompWriter{}
 
 	newStompWriter.hostname = hostname
@@ -68,39 +94,6 @@ func New(hostname, port, username, password, queueName string) (*StompWriter, er
 	}(&newStompWriter)
 
 	return &newStompWriter, nil
-}
-
-func Configure(hostname, port, username, password, queueName, app string) (*StompWriter, error) {
-	ok := true
-	appName := strings.ToUpper(app)
-	// collect logging queue parameters
-	if hostname == "" {
-		fmt.Printf("%s_LOGQUEUEHOST not set.\n", appName)
-		ok = false
-	}
-	if port == "" {
-		fmt.Printf("%s_LOGQUEUEPORT not set.\n", appName)
-		ok = false
-	}
-	if username == "" {
-		fmt.Printf("%s_LOGQUEUEUSER not set.\n", appName)
-		ok = false
-	}
-	if password == "" {
-		fmt.Printf("%s_LOGQUEUEPASS not set.\n", appName)
-		ok = false
-	}
-	if queueName == "" {
-		fmt.Printf("%s_LOGQUEUENAME not set.\n", appName)
-		ok = false
-	}
-
-	if !ok {
-		err := errors.New("Logger configuration not properly set")
-		fmt.Println(err.Error())
-		return nil, err
-	}
-	return New(hostname, port, username, password, queueName)
 }
 
 func (s *StompWriter) Connect() error {
