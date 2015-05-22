@@ -1,11 +1,16 @@
 package stompWriter
 
 import (
+	"errors"
 	"net"
 	"sync"
 	"time"
 
 	"github.com/gmallard/stompngo"
+)
+
+var (
+	BlankValueError = errors.New("Blank values in stompWriter params")
 )
 
 type stompConnectioner interface {
@@ -31,6 +36,22 @@ type StompWriter struct {
 }
 
 func New(hostname, port, username, password, queueName string) (*StompWriter, error) {
+	if hostname == "" {
+		return nil, BlankValueError
+	}
+	if port == "" {
+		return nil, BlankValueError
+	}
+	if username == "" {
+		return nil, BlankValueError
+	}
+	if password == "" {
+		return nil, BlankValueError
+	}
+	if queueName == "" {
+		return nil, BlankValueError
+	}
+
 	newStompWriter := StompWriter{}
 
 	newStompWriter.hostname = hostname
