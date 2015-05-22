@@ -82,7 +82,7 @@ func TestStompWriter(t *testing.T) {
 
 			stompWriter, err := New(hostname, port, username, password, queueName)
 			Expect(stompWriter).To(Equal((*StompWriter)(nil)))
-			Expect(err.Error()).To(Equal("StompWriter: configuration not properly set"))
+			Expect(err.Error()).To(Equal("Blank values in stompWriter params"))
 		})
 		g.It("should send request properly", func() {
 			hostname, port, _ := net.SplitHostPort(server.URL[7:])

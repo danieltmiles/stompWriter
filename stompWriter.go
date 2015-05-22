@@ -2,12 +2,15 @@ package stompWriter
 
 import (
 	"errors"
-	"fmt"
 	"net"
 	"sync"
 	"time"
 
 	"github.com/gmallard/stompngo"
+)
+
+var (
+	BlankValueError = errors.New("Blank values in stompWriter params")
 )
 
 type stompConnectioner interface {
@@ -33,31 +36,20 @@ type StompWriter struct {
 }
 
 func New(hostname, port, username, password, queueName string) (*StompWriter, error) {
-	// collect, validate logging queue parameters
-	ok := true
 	if hostname == "" {
-		fmt.Println("StompWriter: host name not set.")
-		ok = false
+		return nil, BlankValueError
 	}
 	if port == "" {
-		fmt.Println("StompWrtier: port not set.")
-		ok = false
+		return nil, BlankValueError
 	}
 	if username == "" {
-		fmt.Println("StompWriter: username not set.")
-		ok = false
+		return nil, BlankValueError
 	}
 	if password == "" {
-		fmt.Println("StompWriter: password not set.")
-		ok = false
+		return nil, BlankValueError
 	}
 	if queueName == "" {
-		fmt.Println("StompWriter: queue name not set.")
-		ok = false
-	}
-	if !ok {
-		err := errors.New("StompWriter: configuration not properly set")
-		return nil, err
+		return nil, BlankValueError
 	}
 
 	newStompWriter := StompWriter{}
