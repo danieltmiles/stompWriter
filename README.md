@@ -6,7 +6,7 @@ Usage:
 ```
 stompWriter, err := stompWriter.New(hostname, port, username, password, queueName)
 if err != nil {
-	recover()
+	//handle your error
 }
 
 // pass stompWriter to any functions where Writer interface is supported
